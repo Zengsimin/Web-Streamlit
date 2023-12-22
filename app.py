@@ -26,10 +26,8 @@ def get_text(url):
             stop_words.add(line.strip())
     filtered_words = [word for word in words if word not in stop_words] # 去除停用词
     ls = filter(lambda word: len(word) > 1, filtered_words)  # 留下字长大于1的词
-    word_counts = Counter(ls) # 计算词频
-    threshold = 10 # 设置词频阈值
-    filtered_word_freq = {word: freq for word, freq in word_counts.items() if freq >= threshold} # 过滤低频词
-    top_dict = dict(sorted(filtered_word_freq.items(), key=lambda item: item[1], reverse=True)[:20])# 获取词频排名前20的词汇
+    word_counts = Counter(ls).most_common(20)  # 最常出现的
+    top_dict = {element: count for element, count in word_counts}  # 转化为字典类型
     return top_dict
 
 #展示不同类型的图像
